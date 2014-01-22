@@ -58,3 +58,11 @@ a:hover
 {
     position: absolute;
 }
+
+.crafting .ingredient_amount
+{
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bold;
+    position: absolute;
+    font-size: 18px;
+}
