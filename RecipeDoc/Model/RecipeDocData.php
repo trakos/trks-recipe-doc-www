@@ -133,29 +133,24 @@ class RecipeDocData
         $groupedByMod = [];
         foreach ($this->getModList() as $mod)
         {
-            $data = ['Items' => [], 'Weapons' => [], 'Armor' => [], 'Food' => [], 'Blocks' => []];
+            $data = [];
+            foreach ($this->recipeDocData->itemCategories as $category)
+            {
+                $data[$category] = [];
+            }
             foreach ($this->recipeDocData->items as $item)
             {
                 if ($item->mod != $mod) continue;
-                else if ($this->isItemOfType($item, "Items.Tools")) $data['Items'][] = $item;
-                else if ($this->isItemOfType($item, "Items.Weapons")) $data['Weapons'][] = $item;
-                else if ($this->isItemOfType($item, "Items.Armor")) $data['Armor'][] = $item;
-                else if ($this->isItemOfType($item, "Items.Food")) $data['Food'][] = $item;
-                else if ($this->isItemOfType($item, "Blocks.Regular")) $data['Blocks'][] = $item;
-                else $data['Other'][] = $item;
+                $data[$item->category][] = $item;
             }
-            $empties = [];
+            $nonEmpties = [];
             foreach ($data as $category => $items)
             {
-                if (empty($data[$category])) {
-                    $empties[] = $category;
+                if (!empty($data[$category])) {
+                    $nonEmpties[$category] = $items;
                 }
             }
-            foreach ($empties as $emptyCategory)
-            {
-                unset($data[$emptyCategory]);
-            }
-            $groupedByMod[$mod] = $data;
+            $groupedByMod[$mod] = $nonEmpties;
         }
         return $groupedByMod;
     }

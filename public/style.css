@@ -69,3 +69,13 @@ a:hover
     top: 25px;
     color: #fff;
 }
+
+.attributes th
+{
+    text-align: left;
+}
+
+.attributes td
+{
+    text-align: left;
+}

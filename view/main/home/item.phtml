@@ -6,10 +6,10 @@
 <img style="float:left; padding: 10px;" src="/images/icons/<?= $item->icon; ?>" />
 <h1><?= $item->name; ?></h1>
 <p><?= $item->description; ?></p>
-<table>
+<table class="attributes">
     <?php foreach ($item->attributes as $value): ?>
         <tr>
-            <th><?= $value['id']; ?></th>
+            <th><?= $value['id']; ?>:</th>
             <td><?= $value['value']; ?></td>
         </tr>
     <?php endforeach; ?>

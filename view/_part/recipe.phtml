@@ -3,6 +3,7 @@
 /* @var $recipe \Recipe */
 $handler = \RecipeDoc\Model\RecipeDocData::getInstance()->getRecipeHandler($recipe->recipeHandler);
 ?>
+<?php if (!$recipe->visible) return; ?>
 <div class="crafting">
     <img src="/images/recipebg.png"/>
     <img src="/images/gui_backgrounds/<?= $handler->image ?>" style="position:absolute; left: 2px; top: 47px;"/>

@@ -8,6 +8,7 @@
         <tr><th colspan="2"><?= $mod; ?></th></tr>
 
         <?php foreach ($categories as $category => $items): ?>
+            <?php /* @var $items \Item[] */?>
             <tr>
                 <th style="width:10%;"><?= $category; ?></th>
                 <td>
@@ -16,12 +17,12 @@
                         <?php $i = 0; ?>
                         <?php $odd = !$odd; ?>
                         <?php foreach ($items as $item): ?>
+                            <?php if (!$item->showOnList) continue; ?>
                             <?php if ($i == 4): ?>
                                 </tr><tr class="<?= $odd ? 'odd' : ''; ?>">
                                 <?php $i = 0; ?>
                                 <?php $odd = !$odd; ?>
                             <?php endif; ?>
-                            <?php /* @var \Item $item */ ?>
                             <td style="width:25%;">
                                 <a href="<?= $this->url("main", array(
                                     'controller' => 'Home',
