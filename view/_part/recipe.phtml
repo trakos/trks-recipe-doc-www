@@ -11,19 +11,27 @@ $handler = \RecipeDoc\Model\RecipeDocData::getInstance()->getRecipeHandler($reci
     <?php foreach ($recipe->ingredients as $ingredient): ?>
         <?php $itemId = $ingredient->items[0]; ?>
         <?php $item = \RecipeDoc\Model\RecipeDocData::getInstance()->getItem($itemId->id, $itemId->damage); ?>
-        <a class="ingredient"
-           style="left:<?= $ingredient->x * 2.9 + 20; ?>px; top: <?= $ingredient->y * 2.9 + 50; ?>px;" href="<?=
-        $this->url("main", array(
-            'controller' => 'Home',
-            'action' => 'item',
-            'id' => $item->id,
-            'id2' => $item->damage
-        )); ?>" title="<?= $item->name; ?>">
-            <img src="/images/icons/<?= $item->icon; ?>" style="height: 40px; width: 40px;"/>
+        <a
+            class="ingredient"
+            style="left:<?= $ingredient->x * 2.9 + 20; ?>px; top: <?= $ingredient->y * 2.9 + 50; ?>px;"
+            href="<?=$this->url("main", array(
+                'controller' => 'Home',
+                'action' => 'item',
+                'id' => $itemId->id,
+                'id2' => $itemId->damage
+            )); ?>"
+            title="<?= $item ? $item->name : "unknown"; ?>"
+        >
+            <?php if ($item): ?>
+                <img src="/images/icons/<?= $item->icon; ?>" style="height: 40px; width: 40px;"/>
+            <?php else: ?>
+                <img style="padding-left:10px;padding-top:10px;" src="/images/icon_unknown.png" />
+            <?php endif; ?>
+            <?php if ($ingredient->type == \RecipeDoc\Model\RecipeDocData::RECIPE_ITEM_TYPE_RESULT || $ingredient->amount > 1): ?>
+                <div class="ingredient_amount">
+                    <?= $ingredient->amount; ?>
+                </div>
+            <?php endif; ?>
         </a>
-        <?php if ($ingredient->type == \RecipeDoc\Model\RecipeDocData::RECIPE_ITEM_TYPE_RESULT || $ingredient->amount > 1): ?>
-            <div class="ingredient_amount"
-                 style="left:<?= $ingredient->x * 2.9 + 20 + 30; ?>px; top: <?= $ingredient->y * 2.9 + 50 + 25; ?>px;"><?= $ingredient->amount; ?></div>
-        <?php endif; ?>
     <?php endforeach; ?>
 </div>

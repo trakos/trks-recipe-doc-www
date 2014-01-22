@@ -3,6 +3,8 @@
 namespace RecipeDoc\Model;
 
 
+use ZendService\ReCaptcha\Exception;
+
 class RecipeDocData
 {
     const RECIPE_ITEM_TYPE_INGREDIENT = "ingredient";

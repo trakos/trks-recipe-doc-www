@@ -20,8 +20,10 @@ class Home extends MyAbstractController
         $item = RecipeDocData::getInstance()->getItem($this->params()->fromRoute('id', 0), $this->params()->fromRoute('id2', 0));
         if (!$item)
         {
-            $this->flashMessenger()->addErrorMessage('No item with given id found!');
-            throw new TrksForwardException("main");
+            /* @var ViewModel $model */
+            $model = $this->notFoundAction();
+            $model->setVariable('message', 'Item not found!');
+            return $model;
         }
 
         return array(

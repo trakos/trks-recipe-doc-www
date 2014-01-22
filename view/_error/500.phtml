@@ -1,0 +1,18 @@
+<table style="height: 100%; margin: 0 auto;">
+    <tr>
+        <td style="vertical-align: middle;">
+            <h1 style="text-align: center; font-size: 50px;">500</h1>
+            <?php if (T_DEBUG): ?>
+                <pre style="font-size:14px"><?php echo $this->exception; ?></pre>
+            <?php else: ?>
+                <p style="font-size: 50px;">
+                    Damn it, an unexpected exception occurred :(
+                </p>
+            <?php endif; ?>
+        </td>
+    </tr>
+</table>
+<script type="text/javascript">
+    $("body").css("height", "100%");
+    $("html").css("height", "100%");
+</script>
