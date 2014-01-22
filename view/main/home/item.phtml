@@ -1,0 +1,34 @@
+<?php
+/* @var $this \Trks\View\TrksPhpRenderer */
+/* @var $item \Item */
+?>
+
+<img style="float:left; padding: 10px;" src="/images/icons/<?= $item->icon; ?>" />
+<h1><?= $item->name; ?></h1>
+<p><?= $item->description; ?></p>
+<table>
+    <?php foreach ($item->attributes as $value): ?>
+        <tr>
+            <th><?= $value['id']; ?></th>
+            <td><?= $value['value']; ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+<p style="clear: both;"></p>
+
+<h2>Crafting item</h2>
+<?php foreach (\RecipeDoc\Model\RecipeDocData::getInstance()->getRecipesWhereItemIsResult($item->id, $item->damage) as $recipe): ?>
+    <?= $this->render('_part/recipe.phtml', array('recipe' => $recipe)); ?>
+<?php endforeach; ?>
+
+<p style="clear: both;"></p>
+<h2>Recipes with <?= $item->name ?> as ingredient</h2>
+<?php foreach (\RecipeDoc\Model\RecipeDocData::getInstance()->getRecipesWhereItemIsIngredient($item->id, $item->damage) as $recipe): ?>
+    <?= $this->render('_part/recipe.phtml', array('recipe' => $recipe)); ?>
+<?php endforeach; ?>
+
+<p style="clear: both;"></p>
+<h2>Recipes where <?= $item->name ?> serves some role</h2>
+<?php foreach (\RecipeDoc\Model\RecipeDocData::getInstance()->getRecipesWhereItemIsOther($item->id, $item->damage) as $recipe): ?>
+    <?= $this->render('_part/recipe.phtml', array('recipe' => $recipe)); ?>
+<?php endforeach; ?>
