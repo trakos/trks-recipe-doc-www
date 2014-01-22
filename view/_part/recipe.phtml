@@ -4,7 +4,8 @@
 $handler = \RecipeDoc\Model\RecipeDocData::getInstance()->getRecipeHandler($recipe->recipeHandler);
 ?>
 <div class="crafting">
-    <img src="/images/gui_backgrounds/<?= $handler->image ?>" style="width:512px; height:512px;"/>
+    <img src="/images/recipebg.png" />
+    <img src="/images/gui_backgrounds/<?= $handler->image ?>" style="position:absolute; left: 2px; top: 47px;"/>
     <div class="handler"><?= $handler->name; ?></div>
     <?php foreach ($recipe->ingredients as $ingredient): ?>
         <?php $itemId = $ingredient->items[0]; ?>

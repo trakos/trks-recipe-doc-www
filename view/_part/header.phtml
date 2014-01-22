@@ -1,3 +1,4 @@
+<?php /* @var $this \Trks\View\TrksPhpRenderer */ ?>
 <!DOCTYPE html>
 
 <!--[if lt IE 7]>
@@ -17,67 +18,5 @@
     echo $this->headTitle('TrksRecipeDoc')->setSeparator(' - ')->setAutoEscape(false) ?>
     <?php echo $this->headMeta()->appendName('viewport', 'width=device-width,initial-scale=1.0') ?>
 
-    <style>
-        body
-        {
-            font-family: sans-serif;
-            background: #202020;
-            color: #fff;
-            font-size: 0.8em;
-        }
-
-        table tr.odd td
-        {
-            background: #282828;
-        }
-
-        table.navbox th
-        {
-            background: #004B71;
-            color: #fff;
-            font-weight: bold;
-        }
-
-        a, a:visited, .mw-body a:visited
-        {
-            color: #0088CC;
-        }
-
-        a
-        {
-            background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
-            text-decoration: none;
-        }
-
-        a:hover
-        {
-            text-decoration: underline;
-        }
-
-        .crafting
-        {
-            width: 512;
-            height: 512px;
-            position: relative;
-            margin: 10px;
-            float: left;
-        }
-
-        .crafting .handler
-        {
-            text-align: center;
-            width: 512px;
-            color: #222;
-            font-size: 20px;
-            position: absolute;
-            top: 20px;
-        }
-
-        .crafting .ingredient
-        {
-            position: absolute;
-        }
-
-
-    </style>
+    <?= $this->headLink()->appendStylesheet('/style.css', 'screen', null, null); ?>
 </head>
