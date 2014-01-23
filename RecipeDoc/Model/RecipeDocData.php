@@ -236,6 +236,50 @@ class RecipeDocData
 
     /**
      * @param $recipeHandlerId
+     * @return \Recipe[]
+     */
+    public function getRecipesByCraftingType($recipeHandlerId)
+    {
+        $recipes = [];
+        foreach ($this->recipeDocData->recipes as $recipe)
+        {
+            if ($recipe->recipeHandler == $recipeHandlerId)
+            {
+                $recipes[] = $recipe;
+            }
+        }
+        return $recipes;
+    }
+
+    /**
+     * @param $itemId
+     * @param $damageId
+     * @return \RecipeHandler[]
+     */
+    public function getRecipeHandlersByMachineItem($itemId, $damageId)
+    {
+        $recipeHandlers = [];
+        foreach ($this->recipeDocData->recipeTypes as $recipeType)
+        {
+            $found = false;
+            foreach ($recipeType->machines as $machine)
+            {
+                if ($machine->id == $itemId && $machine->damage == $damageId)
+                {
+                    $found = true;
+                    break;
+                }
+            }
+            if ($found)
+            {
+                $recipeHandlers[] = $recipeType;
+            }
+        }
+        return $recipeHandlers;
+    }
+
+    /**
+     * @param $recipeHandlerId
      * @return null|\RecipeHandler
      */
     public function getRecipeHandler($recipeHandlerId)

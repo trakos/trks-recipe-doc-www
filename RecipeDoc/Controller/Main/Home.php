@@ -30,4 +30,20 @@ class Home extends MyAbstractController
             'item' => $item
         );
     }
+
+    public function recipeHandlerAction()
+    {
+        $handler = RecipeDocData::getInstance()->getRecipeHandler($this->params()->fromQuery('action', 'empty'));
+        if (!$handler)
+        {
+            /* @var ViewModel $model */
+            $model = $this->notFoundAction();
+            $model->setVariable('message', 'Recipe type not found!');
+            return $model;
+        }
+
+        return array(
+            'recipeHandler' => $handler
+        );
+    }
 }

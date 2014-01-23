@@ -1,0 +1,43 @@
+<?php
+/* @var $this \Trks\View\TrksPhpRenderer */
+/* @var $recipeHandler \RecipeHandler */
+?>
+
+<?php foreach ($recipeHandler->machines as $machine): ?>
+    <?php $item = \RecipeDoc\Model\RecipeDocData::getInstance()->getItem($machine->id, $machine->damage); ?>
+    <?php if (!$item) continue; ?>
+    <img style="float:left; padding: 10px;" src="/images/icons/<?= $item->icon; ?>" />
+    <a href="<?= $this->url("main", array(
+        'controller' => 'Home',
+        'action' => 'item',
+        'id' => $item->id,
+        'id2' => $item->damage
+    )); ?>">
+        <h1><?= $item->name; ?></h1>
+    </a>
+    <p><?= $item->description; ?></p>
+    <table class="attributes">
+        <?php foreach ($item->attributes as $value): ?>
+            <tr>
+                <th><?= $value['id']; ?>:</th>
+                <td><?= $value['value']; ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <p>
+        <a href="<?= $this->url("main", array(
+            'controller' => 'Home',
+            'action' => 'item',
+            'id' => $item->id,
+            'id2' => $item->damage
+        )); ?>">
+            Click to show how to craft
+        </a>
+    </p>
+    <p style="clear: both;"></p>
+<?php endforeach ?>
+
+<h1>Recipes using those machines</h1>
+<?php foreach (\RecipeDoc\Model\RecipeDocData::getInstance()->getRecipesByCraftingType($recipeHandler->id) as $recipe): ?>
+    <?= $this->render('_part/recipe.phtml', array('recipe' => $recipe)); ?>
+<?php endforeach; ?>

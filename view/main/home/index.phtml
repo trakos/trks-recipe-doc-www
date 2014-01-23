@@ -4,33 +4,34 @@
 ?>
 <?php foreach (\RecipeDoc\Model\RecipeDocData::getInstance()->getGroupedItems() as $mod => $categories): ?>
     <?php if ($mod == 'Minecraft') continue; ?>
-    <table style="width:100%;" class="navbox">
+    <table style="width:100%;" class="navbox" cellspacing="0">
         <tr><th colspan="2"><?= $mod; ?></th></tr>
-
         <?php foreach ($categories as $category => $items): ?>
+            <tr><td colspan="2"></td></tr>
             <?php /* @var $items \Item[] */?>
             <tr>
                 <th style="width:10%;"><?= $category; ?></th>
                 <td>
-                    <table style="width:100%;">
+                    <table style="width:100%;" border="0" cellspacing="0">
                     <tr class="<?= $odd ? 'odd' : ''; ?>" style="width:100%;">
                         <?php $i = 0; ?>
                         <?php $odd = !$odd; ?>
                         <?php foreach ($items as $item): ?>
                             <?php if (!$item->showOnList) continue; ?>
                             <?php if ($i == 4): ?>
-                                </tr><tr class="<?= $odd ? 'odd' : ''; ?>">
+                                </tr><tr class="<?= !$odd ? 'odd' : ''; ?>"><td colspan="4"></td></tr><tr class="<?= $odd ? 'odd' : ''; ?>">
                                 <?php $i = 0; ?>
                                 <?php $odd = !$odd; ?>
                             <?php endif; ?>
-                            <td style="width:25%;">
+                            <td style="width:25%;line-height: 20px; padding:2px 5px ">
                                 <a href="<?= $this->url("main", array(
                                     'controller' => 'Home',
                                     'action' => 'item',
                                     'id' => $item->id,
                                     'id2' => $item->damage
                                 )); ?>">
-                                    <img src="images/icons/<?= $item->icon; ?>" width="16px" height="16px"> <?= $item->name; ?>
+                                    <img src="images/icons/<?= $item->icon; ?>" width="16px" height="16px" style="background:#aaa;vertical-align:middle;margin-top:-4px">
+                                    <?= $item->name; ?>
                                 </a>
                             </td>
                             <?php $i++; ?>
@@ -41,5 +42,6 @@
                 </td>
             </tr>
         <?php endforeach; ?>
+        <tr><td colspan="2"></td></tr>
     </table>
 <?php endforeach; ?>

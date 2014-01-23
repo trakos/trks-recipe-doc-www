@@ -14,6 +14,18 @@
         </tr>
     <?php endforeach; ?>
 </table>
+<?php foreach (\RecipeDoc\Model\RecipeDocData::getInstance()->getRecipeHandlersByMachineItem($item->id, $item->damage) as $recipeHandler): ?>
+    <p><a href="<?=$this->url("main", array(
+        'controller' => 'Home',
+        'action' => 'recipe-handler'
+    ), array(
+        'query' => array(
+            'action' => $recipeHandler->id
+        )
+    )); ?>">
+            Show <?= $recipeHandler->name ?> recipes
+    </a></p>
+<?php endforeach; ?>
 <p style="clear: both;"></p>
 
 <h2>Crafting item</h2>
