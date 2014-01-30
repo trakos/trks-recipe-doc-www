@@ -2,45 +2,134 @@
 /* @var $this \Trks\View\TrksPhpRenderer */
 /* @var $item \Item */
 ?>
+<?=
+$this->render("_part/mainmenu.phtml",
+    array(
+        'currentMod' => $item->mod,
+        'class' => 'vertical'
+    )); ?>
+<div id="container" style="">
+    <img style="float:left; padding: 10px;" src="/images/icons/<?= $item->icon; ?>"/>
 
-<img style="float:left; padding: 10px;" src="/images/icons/<?= $item->icon; ?>" />
-<h1><?= $item->name; ?></h1>
-<p><?= $item->description; ?></p>
-<table class="attributes">
-    <?php foreach ($item->attributes as $value): ?>
-        <tr>
-            <th><?= $value['id']; ?>:</th>
-            <td><?= $value['value']; ?></td>
+    <h1><?= $item->name; ?></h1>
+
+    <p><?= $item->description; ?></p>
+
+
+
+
+    <?php $odd = true; ?>
+    <table class="attributes">
+        <tr class="<?= ($odd = !$odd) ? 'odd' : '' ?>">
+            <th>Raw name:</th>
+            <td><?= $item->rawName; ?></td>
         </tr>
+        <tr class="<?= ($odd = !$odd) ? 'odd' : '' ?>">
+            <th>Base item:</th>
+            <td><?= $item->isBaseItem ? "yes" : "no"; ?></td>
+        </tr>
+        <?php foreach ($item->attributes as $value): ?>
+            <tr class="<?= ($odd = !$odd) ? 'odd' : '' ?>">
+                <th><?= $value['id']; ?>:</th>
+                <td><?= $value['value']; ?></td>
+            </tr>
+        <?php endforeach; ?>
+        <?php $k = 0; ?>
+        <?php foreach ($item->rawCost as $costItems): ?>
+            <tr class="<?= ($odd = !$odd) ? 'odd' : '' ?>">
+                <th style="vertical-align: top">
+                    Raw cost:
+                    <?= $k ? "<br />(alternative " . $k . ")" : "" ?>
+                </th>
+                <?php $k++; ?>
+                <td>
+                    <table>
+                        <?php if (!empty($costItems->items)): ?>
+                            <?php usort($costItems->items, function ($a, $b) {
+                                return
+                                    $a->id < $b->id
+                                        ? 1
+                                        :
+                                        $a->id == $b->id
+                                            ? 0
+                                            : 1;
+                            }); ?>
+                            <?php foreach ($costItems->items as $costItem): ?>
+                                <?php $ingredient = \RecipeDoc\Model\RecipeDocData::getInstance()->getItem($costItem->id, $costItem->damage); ?>
+                                <tr>
+                                    <td><?= round(floatval($costItem->amount), 2) ?></td>
+                                    <td> x</td>
+                                    <td>
+                                        <a
+                                            class="ingredient"
+                                            href="<?=
+                                            $this->url("main", array(
+                                                'controller' => 'Home',
+                                                'action' => 'item',
+                                                'id' => $costItem->id,
+                                                'id2' => $costItem->damage
+                                            )); ?>"
+                                            title="<?= $ingredient ? $ingredient->name : "unknown"; ?>"
+                                            >
+                                            <?php if ($item): ?>
+                                                <img src="/images/icons/<?= $ingredient->icon; ?>"
+                                                     style="height: 16px; width: 16px;"/>
+                                            <?php else: ?>
+                                                <img style="padding-left:10px;padding-top:10px;"
+                                                     src="/images/icon_unknown.png"/>
+                                            <?php endif; ?>
+                                            <?= $ingredient ? $ingredient->name : "unknown"; ?>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </table>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <?php foreach (\RecipeDoc\Model\RecipeDocData::getInstance()->getRecipeHandlersByMachineItem($item->id, $item->damage) as $recipeHandler): ?>
+        <p><a href="<?=
+            $this->url("main", array(
+                'controller' => 'Home',
+                'action' => 'recipe-handler'
+            ), array(
+                'query' => array(
+                    'action' => $recipeHandler->id
+                )
+            )); ?>">
+                Show <?= $recipeHandler->name ?> recipes
+            </a></p>
     <?php endforeach; ?>
-</table>
-<?php foreach (\RecipeDoc\Model\RecipeDocData::getInstance()->getRecipeHandlersByMachineItem($item->id, $item->damage) as $recipeHandler): ?>
-    <p><a href="<?=$this->url("main", array(
-        'controller' => 'Home',
-        'action' => 'recipe-handler'
-    ), array(
-        'query' => array(
-            'action' => $recipeHandler->id
-        )
-    )); ?>">
-            Show <?= $recipeHandler->name ?> recipes
-    </a></p>
-<?php endforeach; ?>
-<p style="clear: both;"></p>
 
-<h2>Crafting item</h2>
-<?php foreach (\RecipeDoc\Model\RecipeDocData::getInstance()->getRecipesWhereItemIsResult($item->id, $item->damage) as $recipe): ?>
-    <?= $this->render('_part/recipe.phtml', array('recipe' => $recipe)); ?>
-<?php endforeach; ?>
 
-<p style="clear: both;"></p>
-<h2>Recipes with <?= $item->name ?> as ingredient</h2>
-<?php foreach (\RecipeDoc\Model\RecipeDocData::getInstance()->getRecipesWhereItemIsIngredient($item->id, $item->damage) as $recipe): ?>
-    <?= $this->render('_part/recipe.phtml', array('recipe' => $recipe)); ?>
-<?php endforeach; ?>
+    <?=
+    $this->render("_part/modmenu.phtml",
+        array(
+            'categories' => \RecipeDoc\Model\RecipeDocData::getInstance()->getGroupedItems()[$item->mod],
+            'mod' => $item->mod,
+            'style' => 'max-width: 1600px;',
+            'class' => 'toggle',
+            'markItem' => $item
+        )); ?>
 
-<p style="clear: both;"></p>
-<h2>Recipes where <?= $item->name ?> serves some role</h2>
-<?php foreach (\RecipeDoc\Model\RecipeDocData::getInstance()->getRecipesWhereItemIsOther($item->id, $item->damage) as $recipe): ?>
-    <?= $this->render('_part/recipe.phtml', array('recipe' => $recipe)); ?>
-<?php endforeach; ?>
+    <h2>Crafting item</h2>
+    <?php foreach (\RecipeDoc\Model\RecipeDocData::getInstance()->getRecipesWhereItemIsResult($item->id, $item->damage) as $recipe): ?>
+        <?= $this->render('_part/recipe.phtml', array('recipe' => $recipe)); ?>
+    <?php endforeach; ?>
+
+    <p style="clear: right;"></p>
+
+    <h2>Recipes with <?= $item->name ?> as ingredient</h2>
+    <?php foreach (\RecipeDoc\Model\RecipeDocData::getInstance()->getRecipesWhereItemIsIngredient($item->id, $item->damage) as $recipe): ?>
+        <?= $this->render('_part/recipe.phtml', array('recipe' => $recipe)); ?>
+    <?php endforeach; ?>
+
+    <p style="clear: right;"></p>
+
+    <h2>Recipes where <?= $item->name ?> serves some role</h2>
+    <?php foreach (\RecipeDoc\Model\RecipeDocData::getInstance()->getRecipesWhereItemIsOther($item->id, $item->damage) as $recipe): ?>
+        <?= $this->render('_part/recipe.phtml', array('recipe' => $recipe)); ?>
+    <?php endforeach; ?>
+</div>

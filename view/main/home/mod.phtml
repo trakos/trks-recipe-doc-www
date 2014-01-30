@@ -1,0 +1,16 @@
+<?php
+/* @var $this \Trks\View\TrksPhpRenderer */
+/* @var $mod string */
+?>
+<?= $this->render("_part/mainmenu.phtml",
+    array(
+        'currentMod' => $mod,
+        'class' => 'vertical'
+    )); ?>
+
+<?= $this->render("_part/modmenu.phtml",
+    array(
+        'categories' => \RecipeDoc\Model\RecipeDocData::getInstance()->getGroupedItems()[$mod],
+        'mod' => $mod,
+        'style' => 'max-width: 1600px;',
+    )); ?>

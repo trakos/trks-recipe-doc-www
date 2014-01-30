@@ -4,24 +4,24 @@
 $handler = \RecipeDoc\Model\RecipeDocData::getInstance()->getRecipeHandler($recipe->recipeHandler);
 ?>
 <?php if (!$recipe->visible) return; ?>
-<div class="crafting">
+<div class="crafting" style="<?= $handler->name == 'NASA Workbench' ? "height:500px;" : "" ?>">
     <img src="/images/recipebg.png"/>
-    <img src="/images/gui_backgrounds/<?= $handler->image ?>" style="position:absolute; left: 2px; top: 47px;"/>
+    <img src="/images/gui_backgrounds/<?= $handler->image ?>" style="position:absolute; left: 7px; top: 47px; width:490px;"/>
 
     <div class="handler">
         <?= $handler->name; ?>
-        <?php if (!empty($handler->machines) && array_search($handler->name, ['Shaped Mekanism Crafting']) === false): ?>
-            <a href="<?=$this->url("main", array(
+        <?php /*if (!empty($handler->machines) && array_search($handler->name, ['Shaped Mekanism Crafting']) === false): */?><!--
+            <a href="<?/*=$this->url("main", array(
                 'controller' => 'Home',
                 'action' => 'recipe-handler'
             ), array(
                 'query' => array(
                     'action' => $handler->id
                 )
-            )); ?>"">
+            )); */?>"">
                 (show machines)
             </a>
-        <?php endif; ?>
+        --><?php /*endif; */?>
     </div>
     <?php foreach ($recipe->ingredients as $ingredient): ?>
         <?php $itemId = $ingredient->items[0]; ?>

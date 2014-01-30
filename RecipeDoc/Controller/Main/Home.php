@@ -46,4 +46,20 @@ class Home extends MyAbstractController
             'recipeHandler' => $handler
         );
     }
+
+    public function modAction()
+    {
+        $mod = $this->params()->fromQuery('action', 'empty');
+        if (array_search($mod, RecipeDocData::getInstance()->getModList()) === false)
+        {
+            /* @var ViewModel $model */
+            $model = $this->notFoundAction();
+            $model->setVariable('message', 'Mod not found!');
+            return $model;
+        }
+
+        return array(
+            'mod' => $mod
+        );
+    }
 }

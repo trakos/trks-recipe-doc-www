@@ -1,0 +1,29 @@
+<?php /* @var \Zend\View\Renderer\PhpRenderer $this ; */ ?>
+<a name="menu" ></a>
+<div id="cssmenu" class="<?= isset($class) ? $class : '' ?>">
+    <ul>
+        <li><a href="/">Home</a></li>
+        <?php foreach (\RecipeDoc\Model\RecipeDocData::getInstance()->getModList() as $mod): ?>
+            <li>
+                <?php if (isset($homepage) && $homepage): ?>
+                    <a class="<?= isset($currentMod) && $currentMod == $mod ? 'current' : '' ?>" href="<?= $this->url("main", []); ?>#<?= $mod; ?>">
+                        <?= $mod; ?>
+                    </a>
+                <?php else: ?>
+                    <a class="<?= isset($currentMod) && $currentMod == $mod ? 'current' : '' ?>" href="<?=
+                    $this->url("main", array(
+                        'controller' => 'Home',
+                        'action' => 'mod'
+                    ), array(
+                        'query' => array(
+                            'action' => $mod
+                        )
+                    )); ?>">
+                        <?= $mod; ?>
+                    </a>
+                <?php endif; ?>
+            </li>
+        <?php endforeach; ?>
+        <li style="clear:both;"></li>
+    </ul>
+</div>

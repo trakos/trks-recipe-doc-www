@@ -73,6 +73,7 @@ class RecipeDocData
      */
     public function getModList()
     {
+       sort($this->modList);
        return $this->modList;
     }
 
@@ -140,7 +141,7 @@ class RecipeDocData
             }
             foreach ($this->recipeDocData->items as $item)
             {
-                if ($item->mod != $mod) continue;
+                if ($item->mod != $mod || !$item->showOnList) continue;
                 $data[$item->category][] = $item;
             }
             $nonEmpties = [];

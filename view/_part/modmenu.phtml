@@ -1,0 +1,61 @@
+<?php
+/* @var string $mod */
+/* @var \Item[][] $categories */
+/* @var string|null $style */
+/* @var string|null $class */
+/* @var \Item|null $markItem */
+?>
+<table style="margin: 30px auto;border:1px solid black;<?= isset($style) ? $style : ""; ?>" class="navbox <?= isset($class) ? $class : ""; ?>"
+       cellspacing="0">
+    <thead>
+    <tr>
+        <th colspan="2"><?= $mod; ?></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php $odd = true; ?>
+    <?php foreach ($categories as $category => $items): ?>
+        <tr>
+            <td colspan="2"></td>
+        </tr>
+        <?php /* @var $items \Item[] */ ?>
+        <tr class="<?= $odd ? 'odd' : '' ?>">
+            <th style="width:10%;"><?= $category; ?></th>
+            <td style="padding: 8px 20px;">
+                <ul class="hlist">
+                    <?php foreach ($items as $item): ?>
+                        <?php if (!$item->showOnList) continue; ?>
+                        <li style="white-space:nowrap">
+                            <?php if (isset($markItem) && $markItem->id == $item->id && $markItem->damage == $item->damage): ?>
+                                <a style="color: #fff; text-decoration: none">
+                                    <img src="/images/icons/<?= $item->icon; ?>" width="16px" height="16px"
+                                         style="vertical-align:middle;margin-top:-4px">
+                                    <?= $item->name; ?>
+                                </a>
+                            <?php else: ?>
+                                <a href="<?=
+                                $this->url("main", array(
+                                    'controller' => 'Home',
+                                    'action' => 'item',
+                                    'id' => $item->id,
+                                    'id2' => $item->damage
+                                )); ?>">
+                                    <img src="/images/icons/<?= $item->icon; ?>" width="16px" height="16px"
+                                         style="vertical-align:middle;margin-top:-4px">
+                                    <?= $item->name; ?>
+                                </a>
+                            <?php endif; ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </td>
+        </tr>
+        <?php $odd = !$odd; ?>
+    <?php endforeach; ?>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="2"></td>
+    </tr>
+    </tfoot>
+</table>

@@ -2,6 +2,7 @@
 /* @var $this \Trks\View\TrksPhpRenderer */
 /* @var $recipeHandler \RecipeHandler */
 ?>
+<?= $this->render("_part/mainmenu.phtml"); ?>
 
 <?php foreach ($recipeHandler->machines as $machine): ?>
     <?php $item = \RecipeDoc\Model\RecipeDocData::getInstance()->getItem($machine->id, $machine->damage); ?>

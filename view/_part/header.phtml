@@ -20,4 +20,16 @@
 
     <?= $this->headLink()->appendStylesheet('/style.css', 'screen', null, null); ?>
     <?= $this->headScript()->appendFile('/js/jquery-2.0.3.min.js'); ?>
+
+    <script type="text/javascript">
+        $(function () {
+            $(".navbox.toggle").css("min-width", "500px");
+            $(".navbox.toggle thead th").css("cursor", "pointer");
+            $(".navbox.toggle thead th").prepend("&#8595; ").append(" &#8595;");
+            $(".navbox.toggle thead th").click(function () {
+                $($(this).parents("table").get(0)).children("tbody").slideToggle();
+            })
+            $(".navbox.toggle thead th").append("<span style='float:right;font-size:10px; margin-right: 5px;'>click to toggle</span>")
+        });
+    </script>
 </head>

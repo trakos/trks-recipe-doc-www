@@ -5,6 +5,8 @@ body
     background: #202020;
     color: #fff;
     font-size: .8em;
+    padding: 0;
+    margin: 0;
 }
 
 table tr.odd td
@@ -17,6 +19,30 @@ table.navbox th
     background: #004B71;
     color: #fff;
     font-weight: bold;
+}
+
+table.navbox.toggle tbody
+{
+    display: none;
+}
+
+ul {
+    list-style-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAANAQMAAABb8jbLAAAABlBMVEX///8AUow5QSOjAAAAAXRSTlMAQObYZgAAABNJREFUCB1jYEABBQw/wLCAgQEAGpIDyT0IVcsAAAAASUVORK5CYII=");
+    line-height: 1.5em;
+}
+
+ul.hlist, ol.hlist {
+    padding: 0.125em 0;
+    margin: 0;
+}
+
+.hlist dd:after, .hlist li:after {
+    content: " · ";
+    font-weight: bold;
+}
+.hlist dd, .hlist dt, .hlist li {
+    display: inline;
+    margin: 0;
 }
 
 a, a:visited, .mw-body a:visited
@@ -41,7 +67,7 @@ a:hover
     height: 300px;
     position: relative;
     margin: 10px;
-    float: left;
+    float: right;
 }
 
 .crafting .handler
@@ -70,12 +96,96 @@ a:hover
     color: #fff;
 }
 
-.attributes th
-{
-    text-align: left;
+table.attributes {
+    border: 1px solid black;
+    min-width: 20%;
 }
 
-.attributes td
+.attributes > tbody > tr > th, .attributes > tbody > tr > td
 {
     text-align: left;
+    padding: 5px 15px;
+}
+
+table.attributes tr.odd td
+{
+    background: #282828;
+}
+
+table.attributes th
+{
+    background: #004B71;
+    color: #fff;
+    font-weight: bold;
+}
+
+
+#cssmenu ul {
+    /*background: url("http://cssmenumaker.com/sites/default/files/menu/58/nav_bg.png") repeat-x scroll left top rgba(0, 0, 0, 0);*/
+    background: #353535;
+    border-bottom: 1px solid #000000;
+    border-top: 1px solid #000000;
+    display: block;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: auto;
+}
+
+#cssmenu li {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+#cssmenu li a {
+    color: #999999;
+    display: block;
+    float: left;
+    font-weight: bold;
+    padding: 8px 20px 4px;
+    text-decoration: none;
+    border-bottom: 4px solid #ddd;
+}
+.vertical#cssmenu {
+    float: left;
+}
+
+.vertical#cssmenu li a {
+    float: none;
+    width: 250px;
+}
+#cssmenu li a:hover {
+    /*background: url("http://cssmenumaker.com/sites/default/files/menu/58/nav_bg.png") no-repeat scroll 0 -30px rgba(0, 0, 0, 0);*/
+    color: #FFFFFF;
+    border-bottom: 4px solid #3D81D3;
+    text-decoration: none;
+}
+#cssmenu li a.current {
+    border-color: #353535;
+}
+
+#container {
+    position: inherit;
+    margin-left:400px
+}
+
+@media (max-width: 1000px) {
+    #container {
+        position: inherit;
+        margin-left:0px
+    }
+}
+
+@media (max-width: 850px) {
+    .vertical#cssmenu, .vertical#cssmenu li, .vertical#cssmenu li a {
+        width: 100%;
+    }
+    #container {
+        position: relative;
+        margin-left:0px
+    }
 }
