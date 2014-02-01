@@ -3,15 +3,25 @@
 $odd = true;
 ?>
 <?= $this->render("_part/mainmenu.phtml", array('homepage' => true)); ?>
+<?php $first = true; ?>
 <?php foreach (\RecipeDoc\Model\RecipeDocData::getInstance()->getGroupedItems() as $mod => $categories): ?>
     <?php //if ($mod == 'Minecraft') continue; ?>
+    <?php if (!$first): ?>
+        <p style="text-align: center; margin: 0; padding: 0;">
+            <a name="<?= $mod; ?>" href="#menu" style="text-align: center; color: #444; font-weight: bold; margin: 0 auto;">&#8593; back to top &#8593;</a>
+        </p>
+    <?php else: ?>
+        <?php $first = false; ?>
+    <?php endif; ?>
+
     <?= $this->render("_part/modmenu.phtml",
         array(
             'categories' => $categories,
             'mod' => $mod,
             'style' => 'width: 90%'
         )); ?>
-    <p style="text-align: center; margin: 0; padding: 0;">
-        <a name="<?= $mod; ?>" href="#menu" style="text-align: center; color: #444; font-weight: bold; margin: 0 auto;">&#8593; back to top &#8593;</a>
-    </p>
+
 <?php endforeach; ?>
+<p style="text-align: center; margin: 0; padding: 0;">
+    <a href="#menu" style="text-align: center; color: #444; font-weight: bold; margin: 0 auto;">&#8593; back to top &#8593;</a>
+</p>

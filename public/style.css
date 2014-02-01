@@ -67,7 +67,7 @@ a:hover
     height: 300px;
     position: relative;
     margin: 10px;
-    float: right;
+    float: left;
 }
 
 .crafting .handler
@@ -119,6 +119,10 @@ table.attributes th
     font-weight: bold;
 }
 
+#cssmenu {
+    position: relative;
+    z-index: 10;
+}
 
 #cssmenu ul {
     /*background: url("http://cssmenumaker.com/sites/default/files/menu/58/nav_bg.png") repeat-x scroll left top rgba(0, 0, 0, 0);*/
@@ -161,31 +165,42 @@ table.attributes th
 #cssmenu li a:hover {
     /*background: url("http://cssmenumaker.com/sites/default/files/menu/58/nav_bg.png") no-repeat scroll 0 -30px rgba(0, 0, 0, 0);*/
     color: #FFFFFF;
-    border-bottom: 4px solid #3D81D3;
+    border-bottom: 4px solid #f00;
     text-decoration: none;
 }
 #cssmenu li a.current {
-    border-color: #353535;
+    border-color: #3D81D3;
+    color: #FFFFFF;
 }
 
 #container {
-    position: inherit;
-    margin-left:400px
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    padding-left:300px;
+    margin: 0;
+    width: 100%;
+    position: absolute;
 }
 
 @media (max-width: 1000px) {
     #container {
-        position: inherit;
-        margin-left:0px
+        padding-left:230px;
+    }
+    #cssmenu li a {
+        padding: 8px 10px 4px;
+    }
+    .vertical#cssmenu li a {
+        width: 200px;
     }
 }
 
-@media (max-width: 850px) {
+@media (max-width: 780px) {
     .vertical#cssmenu, .vertical#cssmenu li, .vertical#cssmenu li a {
         width: 100%;
     }
     #container {
         position: relative;
-        margin-left:0px
+        padding-left:0px;
     }
 }

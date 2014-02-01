@@ -5,8 +5,16 @@ $handler = \RecipeDoc\Model\RecipeDocData::getInstance()->getRecipeHandler($reci
 ?>
 <?php if (!$recipe->visible) return; ?>
 <div class="crafting" style="<?= $handler->name == 'NASA Workbench' ? "height:500px;" : "" ?>">
-    <img src="/images/recipebg.png"/>
-    <img src="/images/gui_backgrounds/<?= $handler->image ?>" style="position:absolute; left: 7px; top: 47px; width:490px;"/>
+    <img src="/images/recipebg.png"
+        <?php if ($handler->name == "NASA Workbench"): ?>
+            style="height:480px;width:512px;"
+        <?php endif; ?>
+        />
+    <?php if ($handler->name != "NASA Workbench"): ?>
+        <div style="position:absolute;top:44px;width:500px;overflow:hidden;">
+            <img src="/images/gui_backgrounds/<?= $handler->image ?>" style="margin: 0 auto;"/>
+        </div>
+    <?php endif; ?>
 
     <div class="handler">
         <?= $handler->name; ?>
@@ -21,26 +29,27 @@ $handler = \RecipeDoc\Model\RecipeDocData::getInstance()->getRecipeHandler($reci
             )); */?>"">
                 (show machines)
             </a>
-        --><?php /*endif; */?>
+        --><?php /*endif; */ ?>
     </div>
     <?php foreach ($recipe->ingredients as $ingredient): ?>
         <?php $itemId = $ingredient->items[0]; ?>
         <?php $item = \RecipeDoc\Model\RecipeDocData::getInstance()->getItem($itemId->id, $itemId->damage); ?>
         <a
             class="ingredient"
-            style="left:<?= $ingredient->x * 2.9 + 20; ?>px; top: <?= $ingredient->y * 2.9 + 50; ?>px;"
-            href="<?=$this->url("main", array(
+            style="left:<?= $ingredient->x * 2.9 + 16; ?>px; top: <?= $ingredient->y * 2.9 + 46; ?>px;"
+            href="<?=
+            $this->url("main", array(
                 'controller' => 'Home',
                 'action' => 'item',
                 'id' => $itemId->id,
                 'id2' => $itemId->damage
             )); ?>"
             title="<?= $item ? $item->name : "unknown"; ?>"
-        >
+            >
             <?php if ($item): ?>
                 <img src="/images/icons/<?= $item->icon; ?>" style="height: 40px; width: 40px;"/>
             <?php else: ?>
-                <img style="padding-left:10px;padding-top:10px;" src="/images/icon_unknown.png" />
+                <img style="padding-left:10px;padding-top:10px;" src="/images/icon_unknown.png"/>
             <?php endif; ?>
             <?php if ($ingredient->type == \RecipeDoc\Model\RecipeDocData::RECIPE_ITEM_TYPE_RESULT || $ingredient->amount > 1): ?>
                 <div class="ingredient_amount">

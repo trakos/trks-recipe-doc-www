@@ -119,14 +119,14 @@ $this->render("_part/mainmenu.phtml",
         <?= $this->render('_part/recipe.phtml', array('recipe' => $recipe)); ?>
     <?php endforeach; ?>
 
-    <p style="clear: right;"></p>
+    <p style="clear: both;"></p>
 
     <h2>Recipes with <?= $item->name ?> as ingredient</h2>
     <?php foreach (\RecipeDoc\Model\RecipeDocData::getInstance()->getRecipesWhereItemIsIngredient($item->id, $item->damage) as $recipe): ?>
         <?= $this->render('_part/recipe.phtml', array('recipe' => $recipe)); ?>
     <?php endforeach; ?>
 
-    <p style="clear: right;"></p>
+    <p style="clear: both;"></p>
 
     <h2>Recipes where <?= $item->name ?> serves some role</h2>
     <?php foreach (\RecipeDoc\Model\RecipeDocData::getInstance()->getRecipesWhereItemIsOther($item->id, $item->damage) as $recipe): ?>
