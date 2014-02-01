@@ -10,11 +10,9 @@ $handler = \RecipeDoc\Model\RecipeDocData::getInstance()->getRecipeHandler($reci
             style="height:480px;width:512px;"
         <?php endif; ?>
         />
-    <?php if ($handler->name != "NASA Workbench"): ?>
-        <div style="position:absolute;top:44px;width:500px;overflow:hidden;">
-            <img src="/images/gui_backgrounds/<?= $handler->image ?>" style="margin: 0 auto;"/>
-        </div>
-    <?php endif; ?>
+    <div style="position:absolute;top:44px;width:500px;overflow:hidden;">
+        <img src="/images/gui_backgrounds/<?= $handler->image ?>" style="margin: 0 auto;"/>
+    </div>
 
     <div class="handler">
         <?= $handler->name; ?>
