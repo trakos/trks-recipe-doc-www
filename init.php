@@ -1,5 +1,11 @@
 <?php
 
+/** @noinspection SpellCheckingInspection */
+set_error_handler(function($errno, $errstr, $errfile, $errline ) {
+    /** @noinspection SpellCheckingInspection */
+    throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+});
+
 chdir(__DIR__);
 
 define('T_PATH_APPLICATION', __DIR__);
